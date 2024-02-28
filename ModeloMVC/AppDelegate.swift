@@ -14,6 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //esto me devuelve una instancia y el otro el metodo, ahora tiene un callback y aca nos damos cuenta cuando el fetch termina
+        //como convierto el array a entiendades de negocio
+        
+        MoviesWS().fetch { arrayMovieDTO in
+            let arrayMovie = arrayMovieDTO.map({ Movie(dto: $0)})
+            print(arrayMovie)
+        }
         return true
     }
 

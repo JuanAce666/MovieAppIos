@@ -17,3 +17,16 @@ class ViewController: UIViewController {
 
 }
 
+/*escena, lo basico el view viewController y el model, 
+ loginview loginviewcontroller loginmodel,
+ view: login.xiv / login.storyboard loginview.swift, loginviewProtocol loginviewdelegate
+ 
+ controller:
+ loginviewcontroller.swift
+ 
+ model:
+ loginmodel, loginmodel.swift, loginwebservice.swfit, loginlocalstorage.swift
+ 
+ 
+
+*/
