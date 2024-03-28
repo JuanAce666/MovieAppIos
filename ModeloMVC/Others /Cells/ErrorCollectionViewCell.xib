@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ErrorCollectionViewCell" id="CyE-p7-jYS" customClass="ErrorCollectionViewCell" customModule="ModeloMVC" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="502"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Yv-J6-8yU">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="502"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="keN-F6-C5K">
+                        <rect key="frame" x="30" y="103" width="376" height="120.33333333333331"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamationmark.triangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WsM-ap-piT">
+                                <rect key="frame" x="148" y="1.3333333333333357" width="80" height="77.666666666666657"/>
+                                <color key="tintColor" red="0.74854570629999995" green="0.62257587910000001" blue="0.2037439942" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="Vvb-Qa-HLx"/>
+                                    <constraint firstAttribute="height" constant="80" id="sda-92-62G"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label ajdasjdjasdjasdjasjdasjdasda" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bux-D1-R9d">
+                                <rect key="frame" x="57.333333333333343" y="100" width="261.33333333333326" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="keN-F6-C5K" secondAttribute="trailing" constant="30" id="4ed-qW-p8s"/>
+                    <constraint firstItem="keN-F6-C5K" firstAttribute="centerY" secondItem="0Yv-J6-8yU" secondAttribute="centerY" multiplier="0.65" id="eQy-Xh-aGh"/>
+                    <constraint firstItem="keN-F6-C5K" firstAttribute="leading" secondItem="0Yv-J6-8yU" secondAttribute="leading" constant="30" id="umd-yi-p6X"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+            <size key="customSize" width="436" height="502"/>
+            <connections>
+                <outlet property="lblMessage" destination="bux-D1-R9d" id="wf2-2H-iS4"/>
+            </connections>
+            <point key="canvasLocation" x="311.4503816793893" y="57.74647887323944"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="exclamationmark.triangle.fill" catalog="system" width="128" height="109"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

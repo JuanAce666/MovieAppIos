@@ -27,9 +27,6 @@ class LoginView: UIView, UITextFieldDelegate {
         let user = self.txtUsuario.text
         self.delegate?.loginView2(self, doLoginWith: user)
     }
-
-
-
     
     @IBAction func ClickRegisterHere(_ sender: UIButton) {
         self.delegate?.sendToRegister(self)
@@ -46,16 +43,15 @@ class LoginView: UIView, UITextFieldDelegate {
     func setupTextRegister() {
          configureTextField(txtUsuario, placeholder: "Username")
        }
-    
        func configureTextField(_ textField: UITextField, placeholder: String) {
            
          let placeholderAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: placeholderAttributes)
+        self.txtUsuario.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: placeholderAttributes)
            
          let bottomLine = CALayer()
-         bottomLine.frame = CGRect(x: 0, y: textField.frame.height - 1, width: textField.frame.width, height: 0)
+         bottomLine.frame = CGRect(x: 0, y: self.txtUsuario.frame.height - 1, width: textField.frame.width, height: 0)
          bottomLine.backgroundColor = UIColor.white.cgColor
-         textField.layer.addSublayer(bottomLine)
-         textField.delegate = self
+        self.txtUsuario.layer.addSublayer(bottomLine)
+        self.txtUsuario.delegate = self
        }
 }

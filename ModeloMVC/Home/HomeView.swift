@@ -13,7 +13,6 @@ import UIKit
 }
 
 class HomeView: UIView {
-    
     @IBOutlet weak var delegate: HomeViewDelegate?
     
     @IBAction private func ButtonLogin(_ sender: UIButton) {

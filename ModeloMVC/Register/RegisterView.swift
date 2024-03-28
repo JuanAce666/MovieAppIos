@@ -32,15 +32,17 @@ class RegisterView: UIView, UITextFieldDelegate {
         delegate?.registerView2(self, doLoginWith: registerUsername)
     }
     
+    
+    
     func cambiarEstiloRegisterUsuario() {
           RegisterUsuario.layer.borderWidth = 1.0
           RegisterUsuario.layer.borderColor = UIColor.black.cgColor
           RegisterUsuario.layer.cornerRadius = 8.0
       }
     
+    
     func setupTextRegister() {
          configureTextField(RegisterUsuario, placeholder: "Username")
-
        }
     
     func configureTextField(_ textField: UITextField, placeholder: String) {

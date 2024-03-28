@@ -22,6 +22,7 @@ class KeyboardManager {
     }
     
      func registerKeyboardNotifications() {
+         // addobserver se suscribiendo a un evento,
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.keyboardWillHide(_:)),
                                                name: UIResponder

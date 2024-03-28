@@ -30,22 +30,18 @@ class RegisterViewController: ViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.keyboardManager.unregisterKeyboardNotification()
-        
     }
-    
 }
 
 
 extension RegisterViewController: KeyboardManagerDelegate {
     func keyboardManager(_ keyboardManager: KeyboardManager, keyboarWillShowWith info: KeyboardManager.Info) {
         print("teclado aparece")
-   
     }
     
     func keyboardManager(_ keyboardManager: KeyboardManager, keyboarWillHideWith info: KeyboardManager.Info) {
         print("teclado desaparece")
     }
-
 }
 
 
@@ -66,6 +62,7 @@ extension RegisterViewController: RegisterViewDelegate {
 
         print("Succesful registration")
     }
+    
     private func updateUIWithErrorMessage(_ message: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "Registration Error", message: message, preferredStyle: .alert)
@@ -74,5 +71,4 @@ extension RegisterViewController: RegisterViewDelegate {
         }
         print(message)
     }
-    
 }

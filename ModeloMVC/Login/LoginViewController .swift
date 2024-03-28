@@ -36,21 +36,17 @@ class LoginViewController: ViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.keyboardManager.unregisterKeyboardNotification()
-        
     }
-    
 }
 
 extension LoginViewController: KeyboardManagerDelegate {
     func keyboardManager(_ keyboardManager: KeyboardManager, keyboarWillShowWith info: KeyboardManager.Info) {
         print("teclado aparece")
-   
     }
     
     func keyboardManager(_ keyboardManager: KeyboardManager, keyboarWillHideWith info: KeyboardManager.Info) {
         print("teclado desaparece")
     }
-
 }
 
 
@@ -58,10 +54,7 @@ extension LoginViewController: KeyboardManagerDelegate {
 
 extension LoginViewController: LoginViewDelegate {
     func sendToRegister(_ loginView: LoginView) {
-        
-    }
-    
-    
+    }    
     func loginView2(_ loginView: LoginView, doLoginWith user: String?) {
         guard let user = user, !user.isEmpty else {
             updateUIWithErrorMessage("Please enter your username")
