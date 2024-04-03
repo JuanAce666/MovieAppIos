@@ -8,6 +8,7 @@
 import UIKit
 
 struct MovieStrategy: MovieStrategyProtocol {
+    
     private var movieView: MoviesView
     private lazy var webServices = MoviesWS()
     

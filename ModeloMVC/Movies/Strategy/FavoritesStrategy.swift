@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 
 struct FavoritesStrategy: MovieStrategyProtocol {
-    
     private var movieView: MoviesView
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -18,11 +17,14 @@ struct FavoritesStrategy: MovieStrategyProtocol {
         self.movieView = movieView
     }
     
-    mutating func getMovies() {
+    func getMovies() {
         let fetchRequest: NSFetchRequest<MoviesFavoriteCD> = MoviesFavoriteCD.fetchRequest()
         do {
-            let favoriteMovies = try context.fetch(fetchRequest)
-            self.movieView.reloadData(favoriteMovies.toMoviesToFavoritesMovies)
+            let favoriteMoviesCD = try context.fetch(fetchRequest)
+            let favoriteMovies = favoriteMoviesCD.toMoviesToFavoritesMovies 
+            DispatchQueue.main.async {
+                self.movieView.reloadData(favoriteMovies)
+            }
         } catch {
             print("Error al recuperar películas favoritas: \(error)")
         }

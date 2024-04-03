@@ -21,33 +21,69 @@ class DetailViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private lazy var webServiceDetail = MoviesWS()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getMoviesDetails()
         self.navigationItem.title = "Details"
         // Configurar el botón de favoritos
         setupFavoriteButton()
+        checkIfMovieIsFavorite()
+    }
+    
+    private func checkIfMovieIsFavorite() {
+        guard let movieId = movie?.id else { return }
+        let fetchRequest: NSFetchRequest<MoviesFavoriteCD> = MoviesFavoriteCD.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "idMovies == %d", movieId)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            isFavoriteMovie = !results.isEmpty
+            updateFavoriteButtonImage()
+        } catch {
+            print("Error al verificar si la película es favorita: \(error)")
+        }
     }
     
     @objc private func addToFavorites() {
-        guard let movieDetail = movie else { return }
-        // Crea una instancia de tu entidad Movie en el contexto de CoreData
-        let movieEntity = MoviesFavoriteCD(context: context)
-        // Configura las propiedades de la entidad
-        movieEntity.lblName = movieDetail.original_title
-        movieEntity.idMovies = Int64(movieDetail.id)
-        movieEntity.lblRelaseDate = movieDetail.release_date
-        movieEntity.imgMovie = movieDetail.poster_path
-        // Guarda el contexto para persistir los cambios en la base de datos
+        guard let movieDetail = movie else {
+            print("addToFavorites: La película es nil.")
+            return
+        }
+        
+        let fetchRequest: NSFetchRequest<MoviesFavoriteCD> = MoviesFavoriteCD.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "idMovies == %d", movieDetail.id)
+        
         do {
-            try context.save()
-            // Cambia la imagen del botón para mostrar que la película es favorita
-            navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star.fill")
-            // Muestra algún mensaje o feedback al usuario
-            print("La película ha sido agregada a favoritos.")
+            let results = try context.fetch(fetchRequest)
+            if results.isEmpty {
+                // La película no es favorita, agregar a favoritos
+                let movieEntity = MoviesFavoriteCD(context: context)
+                movieEntity.lblName = movieDetail.original_title
+                movieEntity.idMovies = Int64(movieDetail.id)
+                movieEntity.lblRelaseDate = movieDetail.release_date
+                movieEntity.imgMovie = movieDetail.poster_path
+                try context.save()
+                isFavoriteMovie = true
+                print("addToFavorites: Película agregada a favoritos.")
+            } else {
+                // La película ya es favorita, eliminar de favoritos
+                for object in results {
+                    context.delete(object)
+                }
+                try context.save()
+                isFavoriteMovie = false
+                print("addToFavorites: Película eliminada de favoritos.")
+            }
+            
+            // Actualiza el estado de favoritos y la interfaz de usuario
+            updateFavoriteButtonImage()
+            
+            // Envía una notificación de que la lista de favoritos ha sido actualizada
+            NotificationCenter.default.post(name: Notification.Name("FavoritesUpdated"), object: nil)
+            
         } catch {
-            // Manejar el error aquí
-            print("Error al guardar la película en favoritos: \(error)")
+            print("addToFavorites: Error al modificar favoritos: \(error)")
         }
     }
     
@@ -55,15 +91,12 @@ class DetailViewController: UIViewController {
         let favoritesButtonImage = createFavoriteIcon()
         let favoritesButton = UIBarButtonItem(image: favoritesButtonImage, style: .plain, target: self, action: #selector(addToFavorites))
         navigationItem.rightBarButtonItem = favoritesButton
-        let leftButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),style: .plain, target: self, action: #selector(buttonToBack))
-        navigationItem.leftBarButtonItem = leftButton
     }
-    @objc private func buttonToBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     private func createFavoriteIcon() -> UIImage {
         return UIImage(systemName: isFavoriteMovie ? "star.fill" : "star") ?? UIImage()
     }
+    
     private func updateFavoriteButtonImage() {
         let image = createFavoriteIcon()
         navigationItem.rightBarButtonItem?.image = image
@@ -79,4 +112,3 @@ class DetailViewController: UIViewController {
         }
     }
 }
-

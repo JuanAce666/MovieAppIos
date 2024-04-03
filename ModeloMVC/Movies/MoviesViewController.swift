@@ -14,32 +14,40 @@ class MoviesViewController: UIViewController {
     private var movieView: MoviesView
     private var movies: [Movie] = []
     private lazy var webServices = MoviesWS()
+    private var shouldLoadMoviesOnInit: Bool
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = self.movieView
+        self.navigationItem.title = "Movies"
         self.movieView.delegate = self
-        //metodo que se encargara de configurar adaptadores y configuraciones.
+        // Método que se encargará de configurar adaptadores y configuraciones.
         self.movieView.setupAdapters()
-        //llamamos al metodo getall para obtener todas las peliculas
-        self.getAll()
-       
+        
+        if shouldLoadMoviesOnInit {
+            strategy.getMovies()
+        }
+        
+        // Registrarse para recibir notificaciones de actualización de favoritos
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFavoritesUpdatedNotification), name: Notification.Name("FavoritesUpdated"), object: nil)
     }
     
-    //esta funcion se encarga de obtener datos relacionados con las peliculas a traves del un servicio web
-    private func getAll () {
+    private func getAll() {
         self.movieView.showLoading(true)
-        // Llama al método fetch del objeto webServices para obtener datos de películas.
-            self.webServices.fetch { arrayMovieDTO in
-                self.movieView.showLoading(false)
-            // Convierte los datos obtenidos (arrayMovieDTO) a objetos Movie y actualiza la interfaz de usuario.
+        self.webServices.fetch { arrayMovieDTO in
+            self.movieView.showLoading(false)
             self.movieView.reloadData(arrayMovieDTO.toMovie)
         }
     }
     
-    init(movieView: MoviesView, Movies: MovieStrategyProtocol) {
-        self.strategy = Movies
+    func loadFavorites() {
+        strategy.getMovies()
+    }
+    
+    init(movieView: MoviesView, strategy: MovieStrategyProtocol, shouldLoadMoviesOnInit: Bool) {
         self.movieView = movieView
+        self.strategy = strategy
+        self.shouldLoadMoviesOnInit = shouldLoadMoviesOnInit
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,11 +58,16 @@ class MoviesViewController: UIViewController {
     private func selectedImage(_ movie: Movie) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let detailsVC = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-            detailsVC.movieId = movie.id
-            self.navigationController?.pushViewController(detailsVC, animated: true)
+        detailsVC.movieId = movie.id
+        detailsVC.movie = movie
+        self.navigationController?.pushViewController(detailsVC, animated: true)
+    }
+    
+    @objc private func handleFavoritesUpdatedNotification() {
+        // Actualizar la vista según sea necesario
+        strategy.getMovies()
     }
 }
-
 
 extension MoviesViewController: MovieViewDelegate {
     func movieViewStartPullToRefresh(_ movieView: MoviesView) {
